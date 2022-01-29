@@ -18,8 +18,6 @@ The promise of blockchain has widespread implications for stakeholders in the he
 
 3. The previous records of the Patient cannot be viewed without his/her approval, Only Doctors can view the Patient's basic Medical Info in case of emergency.
 
-## Use case diagram link 
-<a href="https://drive.google.com/open?id=14kzH1gJpAuNz15HFI496wV_5edvLcLgY">Link to Use-Case image</a>
 
 ## Technology stack / technology used ( Very Detailed )
 1. Solidity - To Build The Blockchain.
@@ -42,16 +40,3 @@ There should be a Authority who gives access rights to users
 1. For Storing larger data files, we will use off-chain data storing on cloud servers using encryption, whose key will be stored in the blockchain and will be unique.
 
 2. For Governments of various countries, this DApp will create direct passage between the true beneficiaries and Government. This will in turn result in good utilization of resources.
-
-## github project link
-<a href="https://github.com/rsd511/HealthBuddy-DApp">Link to Github Repo</a>
-
-## Team Code  
-swapnilshinde2000867
-
-## Contact info ( emailid - github id )
-Rahul Sawantdesai - rahul.sawant17@siesgst.ac.in  
-Swapnil Satish Shinde - swapnil.satish17@siesgst.ac.in  
-Shambhavi Sudarsan - shambhavi.sudarsan17@siesgst.ac.in  
-
-
