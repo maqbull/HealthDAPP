@@ -1,7 +1,6 @@
-pragma solidity ^0.4.19;
-//pragma experimental ABIEncoderV2;
- 
- 
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.22 <0.9.0;
+
 contract All_In_One {
     
     // Paitent Structure here 
@@ -91,7 +90,7 @@ contract All_In_One {
             break;
             else{
                 for(uint i=0;i<tid[latestTreatmentid].InsuranceKeep.length;){
-                    if(keccak256(insu_info[insu_id].notCovered[j])==keccak256(tid[latestTreatmentid].InsuranceKeep[i]))
+                    if(keccak256(abi.encodePacked(insu_info[insu_id].notCovered[j]))==keccak256(abi.encodePacked(tid[latestTreatmentid].InsuranceKeep[i])))
                     {
                         flag = false;
                         break;
@@ -121,7 +120,7 @@ contract All_In_One {
     
     mapping(uint=>treatment) tid;
             
-    function createTreatmentID(uint patient_id) public returns (uint){
+    function createTreatmentID(uint patient_id) public pure returns (uint){
         uint treatment_id = (142317*patient_id)%1000003;
         return treatment_id;
     }
@@ -174,20 +173,20 @@ contract All_In_One {
         IdtoAdress[doc_id] = msg.sender;
     }
  
-    function getDoctorDetails(uint _d_id) public constant returns (uint doc_id,bytes32 name,bytes32 practice_type,bytes32 area_of_expertize,uint phone_no,bytes32 Address){
+    function getDoctorDetails(uint _d_id) public view returns (uint doc_id,bytes32 name,bytes32 practice_type,bytes32 area_of_expertize,uint phone_no,bytes32 Address){
         uint val = addresstoId[msg.sender];
         require(entitie[val]==2 || entitie[val]==1 ); 
         return( did[_d_id].doc_id,did[_d_id].name,did[_d_id].practice_type,did[_d_id].area_of_expertize,did[_d_id].phone_no,did[_d_id].Address);
     }
 
-    function requestAccessToPatient(uint _adharCardNumber) returns(uint){
+    function requestAccessToPatient(uint _adharCardNumber) private returns(uint){
            uint val = addresstoId[msg.sender];
            require(entitie[val]==2);
-           uint otp = uint(keccak256(now*_adharCardNumber));
+           uint otp = uint(keccak256(abi.encodePacked(block.timestamp*_adharCardNumber)));
            Otp[_adharCardNumber] = otp;
        }
        
-       function getDetailsOfAllTID(uint _adharCardNumber, uint OTP) public returns(uint []){
+       function getDetailsOfAllTID(uint _adharCardNumber, uint OTP) public view returns(uint[] memory){
            uint val = addresstoId[msg.sender];
            require(entitie[val]==2 && Otp[_adharCardNumber]==OTP);
            return(p_info[_adharCardNumber].treatmentId);
@@ -219,12 +218,12 @@ contract All_In_One {
         IdtoAdress[chem_id] = msg.sender;
     }
     
-    function getchemistinfo(uint chem_id) public returns(bytes32 Address, bytes32 name,uint phone_no){
+    function getchemistinfo(uint chem_id) public view returns(bytes32 Address, bytes32 name,uint phone_no){
         require(entitie[chem_id]==4 || entitie[chem_id]==1); 
         return( cid[chem_id].Address,cid[chem_id].name,cid[chem_id].phoneNo);
     }
     
-    function giveMedicines(uint p_id) public constant returns(bytes32){
+    function giveMedicines(uint p_id) public view returns(bytes32){
         uint val = addresstoId[msg.sender];
         bytes32 medicatines = tid[p_info[p_id].treatmentId[p_info[p_id].treatmentId.length-1]].medicine;
         return(medicatines);
@@ -233,7 +232,7 @@ contract All_In_One {
 //--------------------------------------------------------------------------------------------------------------------------
 //Identify
  
-    function Identify() public returns (uint val) {
+    function Identify() public view returns (uint val) {
         uint No = addresstoId[msg.sender];
         if(entitie[No]==0){
             return(0);
@@ -243,16 +242,3 @@ contract All_In_One {
     }
  
 }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
